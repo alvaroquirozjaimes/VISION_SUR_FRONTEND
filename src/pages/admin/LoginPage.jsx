@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Tv } from 'lucide-react';
+import { LockKeyhole, Mail } from 'lucide-react';
 import useAuthStore from '../../hooks/useAuthStore.js';
 import toast from 'react-hot-toast';
 import styles from './LoginPage.module.css';
@@ -15,6 +15,7 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       await login(email, password);
       navigate('/admin');
@@ -28,23 +29,50 @@ export default function LoginPage() {
   return (
     <div className={`admin-scope ${styles.page}`}>
       <div className={styles.card}>
-        <div className={styles.logo}>
-          <div className={styles.logoMark}><Tv size={20} /></div>
-          <div>
-            <div className={styles.logoText}>Canal 7</div>
-            <div className={styles.logoSub}>Panel de Administración</div>
-          </div>
+        <div className={styles.cardHeader}>
+          <span className={styles.cardKicker}>Panel administrativo</span>
+          <h1 className={styles.cardTitle}>Iniciar sesión</h1>
+          <p className={styles.cardText}>
+            Ingresa tus credenciales para acceder al panel.
+          </p>
         </div>
+
         <form onSubmit={handleSubmit} className={styles.form}>
-          <div className="form-group">
-            <label className="form-label">Correo electrónico</label>
-            <input className="form-input" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="admin@canal7.com" required />
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Correo electrónico</label>
+            <div className={styles.inputWrap}>
+              <Mail size={16} className={styles.inputIcon} />
+              <input
+                className={styles.formInput}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="admin@visionsur.com"
+                required
+              />
+            </div>
           </div>
-          <div className="form-group">
-            <label className="form-label">Contraseña</label>
-            <input className="form-input" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required />
+
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Contraseña</label>
+            <div className={styles.inputWrap}>
+              <LockKeyhole size={16} className={styles.inputIcon} />
+              <input
+                className={styles.formInput}
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+              />
+            </div>
           </div>
-          <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loading}>
+
+          <button
+            type="submit"
+            className={styles.loginBtn}
+            disabled={loading}
+          >
             {loading ? 'Ingresando…' : 'Ingresar'}
           </button>
         </form>
