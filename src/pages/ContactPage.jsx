@@ -1,46 +1,65 @@
 import { useState } from 'react';
 import { contactApi } from '../services/api.js';
 import toast from 'react-hot-toast';
-import { Mail, Phone, MapPin, Tv, Megaphone, Newspaper, Send, CheckCircle } from 'lucide-react';
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Tv,
+  Megaphone,
+  Newspaper,
+  Send,
+  CheckCircle,
+  MonitorPlay,
+} from 'lucide-react';
 import styles from './ContactPage.module.css';
 
 const AD_PACKAGES = [
   {
     name: 'Spot Publicitario',
-    icon: '📺',
-    desc: 'Comerciales de 15, 30 o 60 segundos durante la programación regular.',
-    detail: 'Alcanza a toda nuestra audiencia regional durante los bloques de mayor sintonía.',
+    icon: <Tv size={22} />,
+    desc: 'Comerciales de 15, 30 o 60 segundos durante nuestra programación regular.',
+    detail: 'Impulsa tu marca en franjas de alta audiencia con presencia televisiva regional.',
   },
   {
     name: 'Patrocinio de Programa',
-    icon: '🎙️',
-    desc: 'Tu marca asociada a uno de nuestros programas estrella.',
-    detail: 'Mención de marca, pantalla dividida y presencia en la web del canal.',
+    icon: <Megaphone size={22} />,
+    desc: 'Asocia tu empresa a uno de nuestros espacios informativos o de entretenimiento.',
+    detail: 'Incluye menciones, presencia visual en pantalla y exposición en nuestros canales digitales.',
   },
   {
     name: 'Nota de Prensa',
-    icon: '📰',
-    desc: 'Publicación de comunicados y notas de prensa en nuestra web y noticiero.',
-    detail: 'Ideal para lanzamientos, eventos y comunicados institucionales.',
+    icon: <Newspaper size={22} />,
+    desc: 'Difusión de comunicados, eventos y lanzamientos en nuestra web y espacios informativos.',
+    detail: 'Ideal para instituciones, marcas y organizaciones que buscan visibilidad y respaldo editorial.',
   },
   {
     name: 'Banner Web',
-    icon: '🖥️',
-    desc: 'Espacio publicitario en nuestra plataforma digital.',
-    detail: 'Banner fijo o rotativo visible para todos los visitantes del sitio.',
+    icon: <MonitorPlay size={22} />,
+    desc: 'Espacios publicitarios en la plataforma digital de Visión Sur.',
+    detail: 'Banner fijo o rotativo para aumentar alcance, recordación y tráfico hacia tu marca.',
   },
 ];
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', company: '', subject: 'publicidad', message: '' });
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    subject: 'publicidad',
+    message: '',
+  });
+
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+  const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       await contactApi.submit(form);
       setSent(true);
@@ -54,149 +73,225 @@ export default function ContactPage() {
 
   return (
     <div className={styles.page}>
-      {/* HERO */}
-      <div className={styles.hero}>
+      <section className={styles.hero}>
         <div className="container">
           <div className={styles.heroContent}>
-            <span className="badge badge-red" style={{ marginBottom: 12 }}>Publicidad & Contacto</span>
-            <h1 className={styles.heroTitle}>Llega a toda la región con Canal 7</h1>
+            <span className={styles.heroBadge}>Publicidad & Contacto</span>
+
+            <h1 className={styles.heroTitle}>
+              Lleva tu marca más lejos con Visión Sur Televisión 12.1
+            </h1>
+
             <p className={styles.heroSub}>
-              Somos el canal de referencia de la provincia. Conectamos tu marca con miles de
-              espectadores a través de nuestra señal de televisión y plataforma digital.
+              Conectamos negocios, instituciones y organizaciones con una audiencia regional
+              a través de nuestra señal televisiva, espacios informativos y plataforma digital.
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
       <div className="container">
-        {/* AD PACKAGES */}
         <section className={styles.section}>
-          <h2 className="section-title" style={{ marginBottom: 24 }}>Opciones Publicitarias</h2>
+          <div className={styles.sectionHead}>
+            <span className={styles.sectionKicker}>Soluciones comerciales</span>
+            <h2 className={styles.sectionTitle}>Opciones publicitarias</h2>
+          </div>
+
           <div className={styles.packagesGrid}>
             {AD_PACKAGES.map((p) => (
-              <div key={p.name} className={styles.packageCard}>
+              <article key={p.name} className={styles.packageCard}>
                 <div className={styles.packageIcon}>{p.icon}</div>
                 <h3 className={styles.packageName}>{p.name}</h3>
                 <p className={styles.packageDesc}>{p.desc}</p>
                 <p className={styles.packageDetail}>{p.detail}</p>
-              </div>
+              </article>
             ))}
           </div>
         </section>
 
-        {/* STATS */}
         <section className={styles.statsSection}>
           <div className={styles.statItem}>
             <div className={styles.statNum}>+50K</div>
             <div className={styles.statLabel}>Televidentes diarios</div>
           </div>
+
           <div className={styles.statDivider} />
+
           <div className={styles.statItem}>
             <div className={styles.statNum}>12h</div>
             <div className={styles.statLabel}>Programación diaria</div>
           </div>
+
           <div className={styles.statDivider} />
+
           <div className={styles.statItem}>
             <div className={styles.statNum}>30+</div>
-            <div className={styles.statLabel}>Años en el aire</div>
+            <div className={styles.statLabel}>Años de presencia</div>
           </div>
+
           <div className={styles.statDivider} />
+
           <div className={styles.statItem}>
             <div className={styles.statNum}>100%</div>
             <div className={styles.statLabel}>Cobertura regional</div>
           </div>
         </section>
 
-        {/* CONTACT FORM + INFO */}
         <section className={styles.section}>
           <div className={styles.contactGrid}>
-            {/* Info */}
             <div className={styles.infoCol}>
-              <h2 className="section-title" style={{ marginBottom: 24 }}>Contáctanos</h2>
+              <span className={styles.sectionKicker}>Hablemos</span>
+              <h2 className={styles.sectionTitle}>Contáctanos</h2>
+
               <p className={styles.infoText}>
-                ¿Interesado en pautar con nosotros o tienes alguna consulta?
-                Completa el formulario y nuestro equipo comercial se comunicará contigo
-                a la brevedad.
+                Si deseas pautar con nosotros, difundir una campaña o realizar una consulta
+                institucional, completa el formulario y nuestro equipo se pondrá en contacto
+                contigo a la brevedad.
               </p>
 
               <div className={styles.infoItems}>
                 <div className={styles.infoItem}>
-                  <div className={styles.infoIcon}><MapPin size={18} /></div>
+                  <div className={styles.infoIcon}>
+                    <MapPin size={18} />
+                  </div>
                   <div>
                     <div className={styles.infoItemTitle}>Dirección</div>
-                    <div className={styles.infoItemText}>Av. Principal 123, Regional</div>
+                    <div className={styles.infoItemText}>Av. Principal 123, Perú</div>
                   </div>
                 </div>
+
                 <div className={styles.infoItem}>
-                  <div className={styles.infoIcon}><Phone size={18} /></div>
+                  <div className={styles.infoIcon}>
+                    <Phone size={18} />
+                  </div>
                   <div>
                     <div className={styles.infoItemTitle}>Teléfono</div>
                     <div className={styles.infoItemText}>(000) 000-0000</div>
                   </div>
                 </div>
+
                 <div className={styles.infoItem}>
-                  <div className={styles.infoIcon}><Mail size={18} /></div>
+                  <div className={styles.infoIcon}>
+                    <Mail size={18} />
+                  </div>
                   <div>
-                    <div className={styles.infoItemTitle}>Email comercial</div>
-                    <div className={styles.infoItemText}>publicidad@canal7.com</div>
+                    <div className={styles.infoItemTitle}>Correo comercial</div>
+                    <div className={styles.infoItemText}>publicidad@visionsur.com</div>
                   </div>
                 </div>
+
                 <div className={styles.infoItem}>
-                  <div className={styles.infoIcon}><Tv size={18} /></div>
+                  <div className={styles.infoIcon}>
+                    <Tv size={18} />
+                  </div>
                   <div>
                     <div className={styles.infoItemTitle}>Prensa</div>
-                    <div className={styles.infoItemText}>prensa@canal7.com</div>
+                    <div className={styles.infoItemText}>prensa@visionsur.com</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Form */}
             <div className={styles.formCol}>
               {sent ? (
                 <div className={styles.successBox}>
-                  <CheckCircle size={48} color="var(--green)" />
+                  <div className={styles.successIcon}>
+                    <CheckCircle size={42} />
+                  </div>
                   <h3>¡Mensaje enviado!</h3>
-                  <p>Nuestro equipo se comunicará contigo en las próximas 24 horas hábiles.</p>
-                  <button className="btn btn-ghost" onClick={() => setSent(false)}>Enviar otro mensaje</button>
+                  <p>
+                    Nuestro equipo se comunicará contigo dentro de las próximas 24 horas hábiles.
+                  </p>
+                  <button
+                    type="button"
+                    className={styles.secondaryBtn}
+                    onClick={() => setSent(false)}
+                  >
+                    Enviar otro mensaje
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className={styles.form}>
                   <div className={styles.formRow}>
-                    <div className="form-group">
-                      <label className="form-label">Nombre completo *</label>
-                      <input className="form-input" value={form.name} onChange={e => set('name', e.target.value)} required placeholder="Tu nombre" />
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>Nombre completo *</label>
+                      <input
+                        className={styles.formInput}
+                        value={form.name}
+                        onChange={(e) => set('name', e.target.value)}
+                        required
+                        placeholder="Tu nombre"
+                      />
                     </div>
-                    <div className="form-group">
-                      <label className="form-label">Correo electrónico *</label>
-                      <input className="form-input" type="email" value={form.email} onChange={e => set('email', e.target.value)} required placeholder="tu@empresa.com" />
+
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>Correo electrónico *</label>
+                      <input
+                        className={styles.formInput}
+                        type="email"
+                        value={form.email}
+                        onChange={(e) => set('email', e.target.value)}
+                        required
+                        placeholder="tu@empresa.com"
+                      />
                     </div>
                   </div>
+
                   <div className={styles.formRow}>
-                    <div className="form-group">
-                      <label className="form-label">Teléfono</label>
-                      <input className="form-input" value={form.phone} onChange={e => set('phone', e.target.value)} placeholder="(000) 000-0000" />
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>Teléfono</label>
+                      <input
+                        className={styles.formInput}
+                        value={form.phone}
+                        onChange={(e) => set('phone', e.target.value)}
+                        placeholder="(000) 000-0000"
+                      />
                     </div>
-                    <div className="form-group">
-                      <label className="form-label">Empresa / Marca</label>
-                      <input className="form-input" value={form.company} onChange={e => set('company', e.target.value)} placeholder="Nombre de tu empresa" />
+
+                    <div className={styles.formGroup}>
+                      <label className={styles.formLabel}>Empresa / Marca</label>
+                      <input
+                        className={styles.formInput}
+                        value={form.company}
+                        onChange={(e) => set('company', e.target.value)}
+                        placeholder="Nombre de tu empresa"
+                      />
                     </div>
                   </div>
-                  <div className="form-group">
-                    <label className="form-label">Asunto</label>
-                    <select className="form-input" value={form.subject} onChange={e => set('subject', e.target.value)}>
+
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Asunto</label>
+                    <select
+                      className={styles.formInput}
+                      value={form.subject}
+                      onChange={(e) => set('subject', e.target.value)}
+                    >
                       <option value="publicidad">Publicidad / Pauta</option>
                       <option value="prensa">Nota de Prensa</option>
                       <option value="general">Consulta General</option>
                       <option value="otro">Otro</option>
                     </select>
                   </div>
-                  <div className="form-group">
-                    <label className="form-label">Mensaje *</label>
-                    <textarea className="form-input" value={form.message} onChange={e => set('message', e.target.value)} required placeholder="Cuéntanos sobre tu consulta, tipo de publicidad que buscas, presupuesto aproximado…" rows={5} />
+
+                  <div className={styles.formGroup}>
+                    <label className={styles.formLabel}>Mensaje *</label>
+                    <textarea
+                      className={`${styles.formInput} ${styles.formTextarea}`}
+                      value={form.message}
+                      onChange={(e) => set('message', e.target.value)}
+                      required
+                      placeholder="Cuéntanos sobre tu consulta, el tipo de publicidad que buscas o el objetivo de tu campaña…"
+                      rows={5}
+                    />
                   </div>
-                  <button type="submit" className="btn btn-primary" style={{ justifyContent: 'center', width: '100%' }} disabled={loading}>
-                    <Send size={15} /> {loading ? 'Enviando…' : 'Enviar mensaje'}
+
+                  <button
+                    type="submit"
+                    className={styles.submitBtn}
+                    disabled={loading}
+                  >
+                    <Send size={15} />
+                    <span>{loading ? 'Enviando…' : 'Enviar mensaje'}</span>
                   </button>
                 </form>
               )}

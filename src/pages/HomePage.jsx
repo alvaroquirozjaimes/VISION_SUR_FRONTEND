@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { newsApi, videoApi, programApi } from '../services/api.js';
+import { newsApi, videoApi, programApi, assetUrl } from '../services/api.js';
 import NewsCard from '../components/common/NewsCard.jsx';
 import VideoCard from '../components/common/VideoCard.jsx';
-import { Radio, ArrowRight } from 'lucide-react';
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { Radio, ArrowRight, Clock, CalendarDays } from 'lucide-react';
 import styles from './HomePage.module.css';
 
 export default function HomePage() {
@@ -16,31 +14,77 @@ export default function HomePage() {
   const [liveUrl, setLiveUrl] = useState('');
 
   useEffect(() => {
-    newsApi.getAll({ featured: true, limit: 4 }).then(r => setFeatured(r.data.data)).catch(() => {});
-    newsApi.getAll({ limit: 6 }).then(r => setLatestNews(r.data.data)).catch(() => {});
-    videoApi.getAll({ limit: 4 }).then(r => setVideos(r.data.data)).catch(() => {});
-    programApi.getAll().then(r => setPrograms(r.data)).catch(() => {});
-    programApi.getLiveStream().then(r => setLiveUrl(r.data.url)).catch(() => {});
+    newsApi
+      .getAll({ featured: true, limit: 4 })
+      .then((r) => setFeatured(r.data.data))
+      .catch(() => {});
+
+    newsApi
+      .getAll({ limit: 6 })
+      .then((r) => setLatestNews(r.data.data))
+      .catch(() => {});
+
+    videoApi
+      .getAll({ limit: 4 })
+      .then((r) => setVideos(r.data.data))
+      .catch(() => {});
+
+    programApi
+      .getAll()
+      .then((r) => setPrograms(r.data))
+      .catch(() => {});
+
+    programApi
+      .getLiveStream()
+      .then((r) => setLiveUrl(r.data.url))
+      .catch(() => {});
   }, []);
 
   const hero = featured[0];
   const featuredRest = featured.slice(1);
+
+  const heroImage = hero?.image
+    ? assetUrl(hero.image)
+    : hero
+      ? `https://picsum.photos/seed/${hero.id}/1600/900`
+      : '';
 
   return (
     <div className={styles.page}>
       {/* HERO */}
       {hero && (
         <section className={styles.hero}>
-          <div className={styles.heroImg} style={{ backgroundImage: `url(${hero.image || `https://picsum.photos/seed/${hero.id}/1400/600`})` }}>
+          <div
+            className={styles.heroImg}
+            style={{ backgroundImage: `url(${heroImage})` }}
+          >
             <div className={styles.heroOverlay} />
+
             <div className="container">
               <div className={styles.heroContent}>
-                <span className={`badge badge-category-${hero.category}`}>{hero.category}</span>
+                {hero.category && (
+                  <span className={styles.heroCategory}>{hero.category}</span>
+                )}
+
                 <h1 className={styles.heroTitle}>{hero.title}</h1>
-                <p className={styles.heroSummary}>{hero.summary}</p>
-                <Link to={`/noticias/${hero.slug}`} className="btn btn-primary">
-                  Leer nota completa <ArrowRight size={14} />
-                </Link>
+
+                {hero.summary && (
+                  <p className={styles.heroSummary}>{hero.summary}</p>
+                )}
+
+                <div className={styles.heroActions}>
+                  <Link
+                    to={`/noticias/${hero.slug}`}
+                    className={styles.heroBtn}
+                  >
+                    <span>Leer nota completa</span>
+                    <ArrowRight size={15} />
+                  </Link>
+
+                  <Link to="/noticias" className={styles.heroGhostBtn}>
+                    Más noticias
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -49,35 +93,49 @@ export default function HomePage() {
 
       {/* LIVE BANNER */}
       {liveUrl && (
-        <div className={styles.liveBanner}>
+        <section className={styles.liveBanner}>
           <div className="container">
             <Link to="/en-vivo" className={styles.liveBannerInner}>
               <div className={styles.liveBannerLeft}>
-                <div className="live-dot" />
+                <span className={styles.livePulse}></span>
                 <Radio size={16} />
-                <span>Transmisión en vivo ahora</span>
+                <span>Transmisión en vivo disponible</span>
               </div>
-              <span className={styles.liveBannerCta}>Ver canal en vivo <ArrowRight size={13} /></span>
+
+              <span className={styles.liveBannerCta}>
+                Ver canal en vivo
+                <ArrowRight size={14} />
+              </span>
             </Link>
           </div>
-        </div>
+        </section>
       )}
 
       <div className="container">
-
-        {/* FEATURED — grid layout */}
+        {/* FEATURED */}
         {featured.length > 0 && (
           <section className={styles.section}>
             <div className={styles.sectionHeader}>
-              <h2 className="section-title">Noticias Destacadas</h2>
-              <Link to="/noticias" className={styles.seeAll}>Ver todas <ArrowRight size={13} /></Link>
+              <div>
+                <span className={styles.sectionKicker}>Portada</span>
+                <h2 className={styles.sectionTitle}>Noticias destacadas</h2>
+              </div>
+
+              <Link to="/noticias" className={styles.seeAll}>
+                Ver todas
+                <ArrowRight size={14} />
+              </Link>
             </div>
+
             <div className={styles.featuredRow}>
               <div className={styles.featuredMain}>
                 {hero && <NewsCard news={hero} featured />}
               </div>
+
               <div className={styles.featuredSide}>
-                {featuredRest.slice(0, 2).map(n => <NewsCard key={n.id} news={n} />)}
+                {featuredRest.slice(0, 2).map((n) => (
+                  <NewsCard key={n.id} news={n} />
+                ))}
               </div>
             </div>
           </section>
@@ -87,11 +145,21 @@ export default function HomePage() {
         {latestNews.length > 0 && (
           <section className={styles.section}>
             <div className={styles.sectionHeader}>
-              <h2 className="section-title">Últimas Noticias</h2>
-              <Link to="/noticias" className={styles.seeAll}>Ver todas <ArrowRight size={13} /></Link>
+              <div>
+                <span className={styles.sectionKicker}>Actualidad</span>
+                <h2 className={styles.sectionTitle}>Últimas noticias</h2>
+              </div>
+
+              <Link to="/noticias" className={styles.seeAll}>
+                Ver todas
+                <ArrowRight size={14} />
+              </Link>
             </div>
-            <div className="news-grid fade-in">
-              {latestNews.map(n => <NewsCard key={n.id} news={n} />)}
+
+            <div className={styles.newsGrid}>
+              {latestNews.map((n) => (
+                <NewsCard key={n.id} news={n} />
+              ))}
             </div>
           </section>
         )}
@@ -100,35 +168,70 @@ export default function HomePage() {
         {videos.length > 0 && (
           <section className={styles.section}>
             <div className={styles.sectionHeader}>
-              <h2 className="section-title">Videos Recientes</h2>
-              <Link to="/videos" className={styles.seeAll}>Ver todos <ArrowRight size={13} /></Link>
+              <div>
+                <span className={styles.sectionKicker}>Multimedia</span>
+                <h2 className={styles.sectionTitle}>Videos recientes</h2>
+              </div>
+
+              <Link to="/videos" className={styles.seeAll}>
+                Ver todos
+                <ArrowRight size={14} />
+              </Link>
             </div>
-            <div className="video-grid fade-in">
-              {videos.map(v => <VideoCard key={v.id} video={v} />)}
+
+            <div className={styles.videoGrid}>
+              {videos.map((v) => (
+                <VideoCard key={v.id} video={v} />
+              ))}
             </div>
           </section>
         )}
 
         {/* SCHEDULE */}
         {programs.length > 0 && (
-          <section className={styles.section} style={{ paddingBottom: 0 }}>
+          <section className={`${styles.section} ${styles.sectionNoBottom}`}>
             <div className={styles.sectionHeader}>
-              <h2 className="section-title">Programación del Día</h2>
-              <Link to="/programacion" className={styles.seeAll}>Ver completa <ArrowRight size={13} /></Link>
+              <div>
+                <span className={styles.sectionKicker}>Agenda</span>
+                <h2 className={styles.sectionTitle}>Programación del día</h2>
+              </div>
+
+              <Link to="/programacion" className={styles.seeAll}>
+                Ver completa
+                <ArrowRight size={14} />
+              </Link>
             </div>
+
             <div className={styles.scheduleGrid}>
-              {programs.slice(0, 4).map(p => (
-                <div key={p.id} className={styles.scheduleCard}>
-                  <div className={styles.scheduleTime}>{p.startTime}</div>
-                  <div className={styles.scheduleEnd}>{p.endTime}</div>
-                  <div className={styles.scheduleName}>{p.name}</div>
-                  <div className={styles.scheduleDays}>{p.days?.slice(0,3).join(', ')}{p.days?.length > 3 ? '…' : ''}</div>
-                </div>
+              {programs.slice(0, 4).map((p) => (
+                <article key={p.id} className={styles.scheduleCard}>
+                  <div className={styles.scheduleTop}>
+                    <span className={styles.scheduleBadge}>
+                      <CalendarDays size={12} />
+                      Programa
+                    </span>
+                  </div>
+
+                  <div className={styles.scheduleTimeRow}>
+                    <div className={styles.scheduleTime}>{p.startTime}</div>
+                    <div className={styles.scheduleSeparator}></div>
+                    <div className={styles.scheduleEnd}>{p.endTime}</div>
+                  </div>
+
+                  <h3 className={styles.scheduleName}>{p.name}</h3>
+
+                  <div className={styles.scheduleDays}>
+                    <Clock size={12} />
+                    <span>
+                      {p.days?.slice(0, 3).join(', ')}
+                      {p.days?.length > 3 ? '…' : ''}
+                    </span>
+                  </div>
+                </article>
               ))}
             </div>
           </section>
         )}
-
       </div>
     </div>
   );

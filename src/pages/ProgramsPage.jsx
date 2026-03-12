@@ -1,14 +1,39 @@
 import { useEffect, useState } from 'react';
 import { programApi } from '../services/api.js';
+import { CalendarDays, Clock, ArrowRight, Tv } from 'lucide-react';
 import styles from './ProgramsPage.module.css';
 
-const DAYS = ['lunes','martes','miercoles','jueves','viernes','sabado','domingo'];
+const DAYS = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+
 const DAY_LABELS = {
-  lunes:'Lunes', martes:'Martes', miercoles:'Miércoles',
-  jueves:'Jueves', viernes:'Viernes', sabado:'Sábado', domingo:'Domingo'
+  lunes: 'Lunes',
+  martes: 'Martes',
+  miercoles: 'Miércoles',
+  jueves: 'Jueves',
+  viernes: 'Viernes',
+  sabado: 'Sábado',
+  domingo: 'Domingo',
 };
+
 // JS getDay(): 0=domingo, 1=lunes...
-const JS_DAY_MAP = ['domingo','lunes','martes','miercoles','jueves','viernes','sabado'];
+const JS_DAY_MAP = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+
+function safeParseDays(value) {
+  if (Array.isArray(value)) return value;
+  if (typeof value === 'string') {
+    try {
+      const parsed = JSON.parse(value || '[]');
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
+function normalizeCategory(category) {
+  return String(category || '').trim() || 'General';
+}
 
 export default function ProgramsPage() {
   const [programs, setPrograms] = useState([]);
@@ -17,84 +42,158 @@ export default function ProgramsPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    programApi.getAll()
-      .then(r => {
-        // Normalize days — might come as array or JSON string from backend
-        const normalized = (r.data || []).map(p => ({
+    programApi
+      .getAll()
+      .then((r) => {
+        const normalized = (r.data || []).map((p) => ({
           ...p,
-          days: Array.isArray(p.days)
-            ? p.days
-            : (typeof p.days === 'string' ? JSON.parse(p.days || '[]') : [])
+          days: safeParseDays(p.days),
         }));
         setPrograms(normalized);
       })
-      .catch(err => setError(err.message))
+      .catch((err) => setError(err.message || 'No se pudo cargar la programación.'))
       .finally(() => setLoading(false));
   }, []);
 
   const filtered = programs
-    .filter(p => p.days && p.days.some(d => d.toLowerCase() === activeDay))
+    .filter((p) => p.days && p.days.some((d) => String(d).toLowerCase() === activeDay))
     .sort((a, b) => (a.startTime || '').localeCompare(b.startTime || ''));
 
   return (
-    <div className="container" style={{ paddingTop: 40, paddingBottom: 80 }}>
-      <h1 className="section-title" style={{ marginBottom: 28 }}>Programación</h1>
+    <div className={styles.page}>
+      <div className="container">
+        <section className={styles.hero}>
+          <span className={styles.heroBadge}>
+            <CalendarDays size={14} />
+            Programación oficial
+          </span>
 
-      <div className={styles.days}>
-        {DAYS.map(d => (
-          <button key={d} onClick={() => setActiveDay(d)}
-            className={`${styles.dayBtn} ${activeDay === d ? styles.dayActive : ''}`}>
-            {DAY_LABELS[d]}
-          </button>
-        ))}
-      </div>
+          <h1 className={styles.heroTitle}>Programación de Visión Sur Televisión 12.1</h1>
 
-      {loading && (
-        <p style={{ textAlign:'center', padding:'60px 0', color:'var(--pub-muted)', fontFamily:'var(--font-display)', letterSpacing:2 }}>
-          Cargando programación…
-        </p>
-      )}
-
-      {error && (
-        <div style={{ textAlign:'center', padding:'40px 0' }}>
-          <p style={{ color:'var(--red)', fontSize:14 }}>⚠ Error al cargar: {error}</p>
-          <p style={{ color:'var(--pub-muted)', fontSize:13, marginTop:8 }}>
-            Verifica que el backend esté corriendo en el puerto 4000.
+          <p className={styles.heroText}>
+            Consulta los horarios de nuestros programas y revisa la parrilla diaria de la
+            señal. Encuentra fácilmente qué se transmite cada día de la semana.
           </p>
-        </div>
-      )}
+        </section>
 
-      {!loading && !error && filtered.length === 0 && (
-        <div style={{ textAlign:'center', padding:'60px 0' }}>
-          <p style={{ color:'var(--pub-muted)', fontSize:16 }}>
-            No hay programas configurados para el {DAY_LABELS[activeDay]}.
-          </p>
-          {programs.length === 0 && (
-            <p style={{ color:'var(--pub-muted)', fontSize:13, marginTop:12 }}>
-              Agrega programas desde el <a href="/admin/programacion" style={{ color:'var(--red)' }}>Panel Admin → Programación</a>.
+        <section className={styles.filtersSection}>
+          <div className={styles.days}>
+            {DAYS.map((d) => (
+              <button
+                key={d}
+                type="button"
+                onClick={() => setActiveDay(d)}
+                className={`${styles.dayBtn} ${activeDay === d ? styles.dayActive : ''}`}
+              >
+                {DAY_LABELS[d]}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {loading && (
+          <div className={styles.stateBox}>
+            <div className={styles.stateIcon}>
+              <Tv size={34} />
+            </div>
+            <p className={styles.stateTitle}>Cargando programación…</p>
+            <span className={styles.stateText}>
+              Estamos preparando la grilla de contenidos del día.
+            </span>
+          </div>
+        )}
+
+        {error && (
+          <div className={styles.stateBox}>
+            <div className={styles.stateEmoji}>⚠️</div>
+            <p className={styles.stateTitle}>Ocurrió un problema al cargar la programación</p>
+            <span className={styles.stateText}>{error}</span>
+            <span className={styles.stateHint}>
+              Verifica que el backend esté disponible y que el servicio responda correctamente.
+            </span>
+          </div>
+        )}
+
+        {!loading && !error && filtered.length === 0 && (
+          <div className={styles.stateBox}>
+            <div className={styles.stateEmoji}>📺</div>
+            <p className={styles.stateTitle}>
+              No hay programas configurados para el {DAY_LABELS[activeDay]}.
             </p>
-          )}
-        </div>
-      )}
 
-      {!loading && filtered.length > 0 && (
-        <div className={styles.timeline}>
-          {filtered.map(p => (
-            <div key={p.id} className={styles.programRow}>
-              <div className={styles.time}>
-                {p.startTime}
-                <span>{p.endTime}</span>
+            <span className={styles.stateText}>
+              Aún no se registraron espacios en la parrilla para este día.
+            </span>
+
+            {programs.length === 0 && (
+              <p className={styles.adminHint}>
+                ¿Eres administrador? Agrégalos desde{' '}
+                <a href="/admin/programacion" className={styles.adminLink}>
+                  Panel Admin → Programación <ArrowRight size={13} />
+                </a>
+                .
+              </p>
+            )}
+          </div>
+        )}
+
+        {!loading && !error && filtered.length > 0 && (
+          <section className={styles.timelineSection}>
+            <div className={styles.timelineHeader}>
+              <div>
+                <span className={styles.timelineKicker}>Día seleccionado</span>
+                <h2 className={styles.timelineTitle}>{DAY_LABELS[activeDay]}</h2>
               </div>
-              <div className={styles.dot} />
-              <div className={styles.program}>
-                <div className={styles.programName}>{p.name}</div>
-                {p.description && <p className={styles.programDesc}>{p.description}</p>}
-                <span className={`badge badge-category-${p.category}`}>{p.category}</span>
+
+              <div className={styles.timelineCount}>
+                {filtered.length} programa{filtered.length !== 1 ? 's' : ''}
               </div>
             </div>
-          ))}
-        </div>
-      )}
+
+            <div className={styles.timeline}>
+              {filtered.map((p) => (
+                <article key={p.id} className={styles.programRow}>
+                  <div className={styles.timeBlock}>
+                    <div className={styles.time}>{p.startTime}</div>
+                    <span className={styles.timeEnd}>{p.endTime}</span>
+                  </div>
+
+                  <div className={styles.lineColumn}>
+                    <div className={styles.dot} />
+                    <div className={styles.line} />
+                  </div>
+
+                  <div className={styles.programCard}>
+                    <div className={styles.programTop}>
+                      <span className={styles.programCategory}>
+                        {normalizeCategory(p.category)}
+                      </span>
+                    </div>
+
+                    <h3 className={styles.programName}>{p.name}</h3>
+
+                    {p.description && (
+                      <p className={styles.programDesc}>{p.description}</p>
+                    )}
+
+                    <div className={styles.programMeta}>
+                      <span className={styles.programMetaItem}>
+                        <Clock size={12} />
+                        {p.startTime} - {p.endTime}
+                      </span>
+
+                      <span className={styles.programMetaItem}>
+                        <CalendarDays size={12} />
+                        {DAY_LABELS[activeDay]}
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
     </div>
   );
 }
