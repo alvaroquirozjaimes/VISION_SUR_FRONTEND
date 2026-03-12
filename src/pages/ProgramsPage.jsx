@@ -63,10 +63,10 @@ export default function ProgramsPage() {
     <div className={styles.page}>
       <div className="container">
         <section className={styles.hero}>
-          <span className={styles.heroBadge}>
+          {/* <span className={styles.heroBadge}>
             <CalendarDays size={14} />
             Programación oficial
-          </span>
+          </span> */}
 
           <h1 className={styles.heroTitle}>Programación de Visión Sur Televisión 12.1</h1>
 
@@ -128,9 +128,9 @@ export default function ProgramsPage() {
             {programs.length === 0 && (
               <p className={styles.adminHint}>
                 ¿Eres administrador? Agrégalos desde{' '}
-                <a href="/admin/programacion" className={styles.adminLink}>
+                {/* <a href="/admin/programacion" className={styles.adminLink}>
                   Panel Admin → Programación <ArrowRight size={13} />
-                </a>
+                </a> */}
                 .
               </p>
             )}
@@ -141,7 +141,7 @@ export default function ProgramsPage() {
           <section className={styles.timelineSection}>
             <div className={styles.timelineHeader}>
               <div>
-                <span className={styles.timelineKicker}>Día seleccionado</span>
+                {/* <span className={styles.timelineKicker}>Día seleccionado</span> */}
                 <h2 className={styles.timelineTitle}>{DAY_LABELS[activeDay]}</h2>
               </div>
 

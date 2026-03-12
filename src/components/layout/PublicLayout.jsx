@@ -234,9 +234,9 @@ export default function PublicLayout() {
               © {new Date().getFullYear()} Visión Sur Televisión 12.1. Todos los derechos reservados.
             </span>
 
-            <Link to="/admin" className={styles.footerAdminLink}>
+           {/*  <Link to="/admin" className={styles.footerAdminLink}>
               Panel Admin →
-            </Link>
+            </Link> */}
           </div>
         </div>
       </footer>

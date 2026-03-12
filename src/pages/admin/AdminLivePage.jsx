@@ -73,7 +73,7 @@ export default function AdminLivePage() {
               {currentPreview ? <CheckCircle size={13} /> : <AlertCircle size={13} />}
               <span>
                 {currentPreview
-                  ? 'URL válida — se mostrará como embed.'
+                  ? 'URL válida'
                   : 'URL no reconocida como YouTube — se insertará como iframe directo.'}
               </span>
             </div>

@@ -76,7 +76,7 @@ export default function ContactPage() {
       <section className={styles.hero}>
         <div className="container">
           <div className={styles.heroContent}>
-            <span className={styles.heroBadge}>Publicidad & Contacto</span>
+            {/* <span className={styles.heroBadge}>Publicidad & Contacto</span> */}
 
             <h1 className={styles.heroTitle}>
               Lleva tu marca más lejos con Visión Sur Televisión 12.1
@@ -111,7 +111,7 @@ export default function ContactPage() {
 
         <section className={styles.statsSection}>
           <div className={styles.statItem}>
-            <div className={styles.statNum}>+50K</div>
+            <div className={styles.statNum}>+5K</div>
             <div className={styles.statLabel}>Televidentes diarios</div>
           </div>
 
@@ -125,7 +125,7 @@ export default function ContactPage() {
           <div className={styles.statDivider} />
 
           <div className={styles.statItem}>
-            <div className={styles.statNum}>30+</div>
+            <div className={styles.statNum}>3+</div>
             <div className={styles.statLabel}>Años de presencia</div>
           </div>
 

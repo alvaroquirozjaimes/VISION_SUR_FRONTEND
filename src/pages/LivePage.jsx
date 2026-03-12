@@ -60,7 +60,7 @@ export default function LivePage() {
               />
             </div>
 
-            <div className={styles.playerFooter}>
+            {/* <div className={styles.playerFooter}>
               <div className={styles.playerStatus}>
                 <span className={styles.livePulseSmall}></span>
                 <span>Transmisión activa</span>
@@ -69,7 +69,7 @@ export default function LivePage() {
               <div className={styles.playerMeta}>
                 Señal digital · Visión Sur Televisión 12.1
               </div>
-            </div>
+            </div> */}
           </section>
         )}
 
@@ -85,9 +85,9 @@ export default function LivePage() {
 
             <p className={styles.adminHint}>
               ¿Eres administrador? Configura la URL del stream en{' '}
-              <a href="/admin/en-vivo" className={styles.adminLink}>
+              {/* <a href="/admin/en-vivo" className={styles.adminLink}>
                 Panel Admin → En Vivo <ArrowRight size={13} />
-              </a>
+              </a> */}
               .
             </p>
           </div>
@@ -95,7 +95,7 @@ export default function LivePage() {
 
         {!loading && embedUrl && (
           <p className={styles.hint}>
-            Si el video no carga, verifica que la transmisión esté activa en YouTube.
+            
           </p>
         )}
       </div>

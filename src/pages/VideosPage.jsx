@@ -65,10 +65,10 @@ export function VideosPage() {
     <div className={styles.page}>
       <div className="container">
         <section className={styles.hero}>
-          <span className={styles.heroBadge}>
+          {/* <span className={styles.heroBadge}>
             <Film size={14} />
             Biblioteca audiovisual
-          </span>
+          </span> */}
 
           <h1 className={styles.heroTitle}>Videos de Visión Sur Televisión 12.1</h1>
 
@@ -82,7 +82,7 @@ export function VideosPage() {
           <div className={styles.filtersHeader}>
             <div>
               <span className={styles.filtersKicker}>Explorar</span>
-              <h2 className={styles.filtersTitle}>Filtrar por categoría</h2>
+              {/* <h2 className={styles.filtersTitle}>Filtrar por categoría</h2> */}
             </div>
 
             <div className={styles.resultsCount}>

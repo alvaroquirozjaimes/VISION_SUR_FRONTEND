@@ -106,10 +106,10 @@ export default function NewsDetailPage() {
 
           {news.author && (
             <div className={styles.author}>
-              <div className={styles.authorAvatar}>
+              {/* <div className={styles.authorAvatar}>
                 <User size={14} />
               </div>
-              <span>Por {news.author.name || news.author}</span>
+              <span>Por {news.author.name || news.author}</span> */}
             </div>
           )}
         </header>
