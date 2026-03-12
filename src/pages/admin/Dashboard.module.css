@@ -1,0 +1,33 @@
+.pageHeader { margin-bottom: 32px; }
+.title { font-family: var(--font-display); font-weight: 900; font-size: 28px; letter-spacing: 1px; color: var(--adm-text); }
+.sub { color: var(--adm-muted); font-size: 14px; margin-top: 4px; }
+
+.statsGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px,1fr)); gap: 14px; margin-bottom: 24px; }
+.statCard {
+  background: var(--adm-bg2); border: 1px solid var(--adm-border);
+  border-radius: var(--radius-lg); padding: 18px 20px;
+  display: flex; align-items: center; gap: 14px;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.statCard:hover { border-color: var(--adm-border2); transform: translateY(-1px); }
+.statIcon { width: 42px; height: 42px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.statValue { font-family: var(--font-display); font-weight: 900; font-size: 30px; line-height: 1; color: var(--adm-text); }
+.statLabel { font-size: 11px; color: var(--adm-muted); letter-spacing: 1px; text-transform: uppercase; font-family: var(--font-display); margin-top: 2px; }
+
+.quickActions { display: flex; gap: 10px; margin-bottom: 32px; flex-wrap: wrap; }
+
+.tables { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.tableSection { }
+.tableHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.tableTitle { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--adm-text); }
+.tableLink { font-size: 11px; color: var(--red); display: flex; align-items: center; gap: 4px; font-family: var(--font-display); letter-spacing: 0.5px; }
+.tableCard { background: var(--adm-bg2); border: 1px solid var(--adm-border); border-radius: var(--radius-lg); overflow: hidden; }
+.tableRow { display: flex; align-items: center; gap: 10px; padding: 11px 16px; border-bottom: 1px solid var(--adm-border); }
+.tableRow:last-child { border-bottom: none; }
+.tableRow:hover { background: rgba(255,255,255,0.02); }
+.tableRowMain { flex: 1; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.tableRowTitle { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; color: var(--adm-text2); }
+.tableRowEdit { font-size: 12px; color: var(--adm-muted); flex-shrink: 0; }
+.tableRowEdit:hover { color: var(--red); }
+
+@media (max-width: 768px) { .tables { grid-template-columns: 1fr; } }

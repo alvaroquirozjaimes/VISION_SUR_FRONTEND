@@ -1,0 +1,26 @@
+.card {
+  display: flex; flex-direction: column;
+  background: #fff; border: 1.5px solid var(--pub-border);
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-sm); transition: all 0.18s;
+}
+.card:hover { border-color: var(--pub-border2); box-shadow: var(--shadow); transform: translateY(-3px); }
+
+.imgWrap { position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--pub-bg3); flex-shrink: 0; }
+.imgWrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s; }
+.card:hover .imgWrap img { transform: scale(1.04); }
+
+.body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.title {
+  font-family: var(--font-display); font-weight: 700; font-size: 16px;
+  line-height: 1.3; color: var(--pub-text);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.summary {
+  font-size: 13px; color: var(--pub-text2); line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  flex: 1;
+}
+.meta { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--pub-muted); margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--pub-border); }
+.views { margin-left: auto; display: flex; align-items: center; gap: 3px; }
+.featuredBadge { position: absolute; top: 10px; left: 10px; }

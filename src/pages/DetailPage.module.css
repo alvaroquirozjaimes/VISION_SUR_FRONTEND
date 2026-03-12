@@ -1,0 +1,21 @@
+.page { padding: 40px 0 80px; }
+.loading { text-align: center; padding: 80px 0; color: var(--pub-muted); }
+.back { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-display); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--pub-muted); margin-bottom: 28px; transition: color 0.15s; padding: 6px 12px; border: 1.5px solid var(--pub-border); border-radius: var(--radius); background: #fff; }
+.back:hover { color: var(--pub-text); border-color: var(--pub-border2); }
+.meta { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.date { font-size: 13px; color: var(--pub-muted); }
+.views { font-size: 12px; color: var(--pub-muted); display: flex; align-items: center; gap: 4px; }
+.title { font-family: var(--font-display); font-weight: 900; font-size: clamp(24px, 4vw, 40px); line-height: 1.12; letter-spacing: 0.5px; margin-bottom: 18px; color: var(--pub-text); }
+.summary { font-size: 17px; color: var(--pub-text2); line-height: 1.65; margin-bottom: 24px; border-left: 3px solid var(--red); padding-left: 18px; }
+.author { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--pub-muted); margin-bottom: 28px; }
+.authorAvatar { width: 30px; height: 30px; border-radius: 50%; background: var(--pub-bg3); display: flex; align-items: center; justify-content: center; border: 1.5px solid var(--pub-border); }
+.heroImg { border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 36px; aspect-ratio: 16/9; box-shadow: var(--shadow); }
+.heroImg img { width: 100%; height: 100%; object-fit: cover; }
+.content { font-size: 16px; line-height: 1.82; color: var(--pub-text2); }
+.content h2, .content h3 { font-family: var(--font-display); font-weight: 700; color: var(--pub-text); margin: 32px 0 12px; }
+.content p { margin-bottom: 18px; }
+.content img { border-radius: var(--radius-lg); margin: 24px 0; max-width: 100%; box-shadow: var(--shadow-sm); }
+.content a { color: var(--red); }
+.content blockquote { border-left: 3px solid var(--red); padding-left: 18px; color: var(--pub-muted); font-style: italic; margin: 24px 0; background: var(--pub-bg2); padding: 16px 18px; border-radius: 0 var(--radius) var(--radius) 0; }
+.videoPlayer { border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 28px; background: #000; box-shadow: var(--shadow-lg); }
+.videoPlayer iframe, .videoPlayer video { width: 100%; aspect-ratio: 16/9; border: none; display: block; }

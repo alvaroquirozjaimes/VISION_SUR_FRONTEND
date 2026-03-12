@@ -1,0 +1,41 @@
+.page { }
+
+/* Hero */
+.hero { }
+.heroImg { min-height: 500px; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; position: relative; }
+.heroOverlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.1) 100%); }
+.heroContent { position: relative; z-index: 1; max-width: 700px; padding-bottom: 52px; display: flex; flex-direction: column; gap: 14px; }
+.heroTitle { font-family: var(--font-display); font-weight: 900; font-size: clamp(28px, 4vw, 50px); line-height: 1.08; letter-spacing: 0.5px; color: #fff; }
+.heroSummary { font-size: 16px; color: rgba(255,255,255,0.82); max-width: 540px; line-height: 1.6; }
+
+/* Live banner */
+.liveBanner { background: var(--pub-bg); border-top: 1px solid var(--pub-border); border-bottom: 1px solid var(--pub-border); }
+.liveBannerInner { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; }
+.liveBannerLeft { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 800; font-size: 14px; letter-spacing: 2px; color: var(--red); text-transform: uppercase; }
+.liveBannerCta { font-family: var(--font-display); font-weight: 600; font-size: 12px; letter-spacing: 1px; color: var(--pub-text2); display: flex; align-items: center; gap: 5px; text-transform: uppercase; }
+.liveBannerCta:hover { color: var(--pub-text); }
+
+/* Sections */
+.section { padding: 52px 0 0; }
+.sectionHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.seeAll { font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); display: flex; align-items: center; gap: 4px; }
+.seeAll:hover { color: var(--red-dark); }
+
+/* Feature row: big card + 2 small */
+.featuredRow { display: grid; grid-template-columns: 1.6fr 1fr; gap: 22px; align-items: start; }
+.featuredMain { }
+.featuredMain .card { border-radius: var(--radius-lg); overflow: hidden; }
+.featuredSide { display: flex; flex-direction: column; gap: 16px; }
+
+/* Schedule */
+.scheduleGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 14px; }
+.scheduleCard { background: #fff; border: 1.5px solid var(--pub-border); border-radius: var(--radius-lg); padding: 18px; box-shadow: var(--shadow-sm); transition: all 0.18s; }
+.scheduleCard:hover { box-shadow: var(--shadow); border-color: var(--pub-border2); transform: translateY(-2px); }
+.scheduleTime { font-family: var(--font-display); font-weight: 900; font-size: 24px; color: var(--red); letter-spacing: 0.5px; line-height: 1; }
+.scheduleEnd { font-family: var(--font-display); font-size: 12px; color: var(--pub-muted); margin-top: 2px; }
+.scheduleName { font-family: var(--font-display); font-weight: 700; font-size: 15px; margin-top: 10px; color: var(--pub-text); }
+.scheduleDays { font-size: 11px; color: var(--pub-muted); margin-top: 4px; text-transform: capitalize; }
+
+@media (max-width: 768px) {
+  .featuredRow { grid-template-columns: 1fr; }
+}

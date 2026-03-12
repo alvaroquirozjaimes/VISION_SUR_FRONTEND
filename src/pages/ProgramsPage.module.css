@@ -1,0 +1,13 @@
+.days { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px; }
+.dayBtn { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 8px 18px; background: #fff; border: 1.5px solid var(--pub-border); border-radius: 20px; color: var(--pub-text2); transition: all 0.15s; }
+.dayBtn:hover { color: var(--pub-text); border-color: var(--pub-border2); }
+.dayActive { background: var(--red) !important; color: #fff !important; border-color: var(--red) !important; }
+.timeline { display: flex; flex-direction: column; }
+.programRow { display: flex; align-items: flex-start; gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--pub-border); }
+.programRow:last-child { border-bottom: none; }
+.time { font-family: var(--font-display); font-weight: 900; font-size: 26px; color: var(--red); min-width: 76px; text-align: right; line-height: 1; }
+.time span { display: block; font-size: 12px; color: var(--pub-muted); font-weight: 500; margin-top: 4px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--red); margin-top: 6px; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(217,0,23,0.12); }
+.program { flex: 1; }
+.programName { font-family: var(--font-display); font-weight: 700; font-size: 18px; margin-bottom: 5px; color: var(--pub-text); }
+.programDesc { font-size: 13px; color: var(--pub-text2); margin-bottom: 8px; line-height: 1.5; }

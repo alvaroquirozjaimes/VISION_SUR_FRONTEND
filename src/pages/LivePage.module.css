@@ -1,0 +1,8 @@
+.page { padding: 40px 0 80px; }
+.header { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 900; font-size: 22px; letter-spacing: 1px; text-transform: uppercase; color: var(--red); margin-bottom: 24px; }
+.player { border-radius: var(--radius-lg); overflow: hidden; background: #000; box-shadow: var(--shadow-lg); }
+.player iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+.offline { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 40px; gap: 16px; text-align: center; }
+.offline p { font-size: 18px; color: #ccc; }
+.offline span { font-size: 14px; color: #888; }
+.hint { margin-top: 16px; font-size: 13px; color: var(--pub-muted); text-align: center; }
